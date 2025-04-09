@@ -1,0 +1,24 @@
+#!/usr/bin/pulseaudio -nF
+
+# Core protocols
+load-module module-native-protocol-unix auth-anonymous=1
+load-module module-dbus-protocol
+
+# Bluetooth support
+load-module module-bluetooth-discover
+load-module module-bluetooth-policy
+
+# Automatically restore volume
+load-module module-stream-restore
+load-module module-device-restore
+
+# Create a null sink for audio routing
+load-module module-null-sink sink_name=rtp_output sink_properties="device.description='RTP Output'"
+
+# Load udev for hardware detection
+.ifexists module-udev-detect.so
+load-module module-udev-detect tsched=0
+.endif
+
+# Set the default sink
+set-default-sink rtp_output

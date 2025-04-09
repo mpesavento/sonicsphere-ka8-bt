@@ -1,0 +1,13 @@
+[Unit]
+Description=Bluetooth Agent
+After=bluetooth.service
+Before=bluetooth-setup.service
+Requires=bluetooth.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/bt-agent.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

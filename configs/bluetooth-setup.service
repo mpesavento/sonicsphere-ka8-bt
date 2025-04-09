@@ -1,0 +1,15 @@
+[Unit]
+Description=Bluetooth Setup Service
+After=bluetooth.service
+Requires=bluetooth.service
+Before=pulseaudio.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '/usr/bin/bluetoothctl -- power on'
+ExecStart=/bin/sh -c '/usr/bin/bluetoothctl -- discoverable on'
+ExecStart=/bin/sh -c '/usr/bin/bluetoothctl -- pairable on'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

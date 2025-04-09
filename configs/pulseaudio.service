@@ -1,0 +1,15 @@
+[Unit]
+Description=PulseAudio Sound System
+After=bluetooth.service
+Requires=bluetooth.service
+
+[Service]
+Type=simple
+# Explicitly run as root
+ExecStartPre=/usr/bin/pkill -9 pulseaudio || true
+ExecStart=/usr/bin/sudo -u root /usr/bin/pulseaudio --system --disallow-exit
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
