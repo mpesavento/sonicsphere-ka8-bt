@@ -1,0 +1,18 @@
+#!/usr/bin/pulseaudio -nF
+
+# Load system defaults
+.include /etc/pulse/default.pa
+
+# Unload any automatically loaded modules
+.nofail
+
+# Override modules for our needs
+load-module module-bluetooth-policy
+load-module module-bluetooth-discover
+load-module module-switch-on-connect
+
+# Create a null sink for audio output
+load-module module-null-sink sink_name=rtp_sink sink_properties="device.description='RTP Output'"
+
+# Set default
+set-default-sink rtp_sink

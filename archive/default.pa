@@ -1,0 +1,18 @@
+#!/usr/bin/pulseaudio -nF
+
+# Load core modules - keep this minimal
+load-module module-native-protocol-unix
+
+# Load bluetooth support
+load-module module-bluetooth-policy
+load-module module-bluetooth-discover
+
+# Create a null sink with large buffer
+load-module module-null-sink sink_name=rtp_output sink_properties="device.description='RTP Output'" rate=44100 >
+
+# Automatically restore volume
+load-module module-device-restore
+load-module module-stream-restore
+
+# Set default
+set-default-sink rtp_output
