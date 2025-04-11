@@ -14,5 +14,11 @@ load-module module-switch-on-connect
 # Create a null sink for audio output
 load-module module-null-sink sink_name=rtp_sink sink_properties="device.description='RTP Output'"
 
+# Create sink for the analog audio output (3.5mm jack)
+load-module module-alsa-sink sink_name=analog_output device=hw:0,0 sink_properties="device.description='Analog Output'"
+
+# Route audio from rtp_sink to analog_output
+load-module module-loopback source=rtp_sink.monitor sink=analog_output latency_msec=5
+
 # Set default
 set-default-sink rtp_sink
